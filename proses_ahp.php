@@ -4,7 +4,7 @@
     
     //  $matrix = new Matrix($_POST['crit']);
     //  $nama = $_POST['nama'];
-    function proses_ahp(Array $matrixs, Array $nama ){
+    function proses_ahp(Array $matrixs, Array $nama){
         //pembuatan tabel
         $matrix = new Matrix($matrixs);
         $arrayMatrix = $matrix->toArray();
@@ -135,9 +135,9 @@
         echo "<br>";
         $sVE= [];
         if($check == false && $vectorEigen == null){
-            //print_r($sMatrix);
+  
             return Iterasi($sMatrix, false, $VE);
-            //return "haha";
+  
         }
         else if ($check == false && $vectorEigen != null){
             echo "<br>";
@@ -151,24 +151,18 @@
             $checks = [];
             for ($i=0; $i < sizeof($sVE) ; $i++) { 
                 if($sVE[$i] <= 0.0001){
-                    $checks[] = 1;
-                    //echo "a";                    
+                    $checks[] = 1;                   
                 }
                 else{
                     $checks[] = 0;
                 }
                                  
             }
-            //print_r($check);
+
             if(in_array(0, $checks, TRUE)){
                return Iterasi($sMatrix, false, $VE);
             }
-            // else{
-            //     // return Iterasi($sMatrix, true, $VE);
-
-                
-            // }
-            //print_r($VE);
+   
             return $VE;
             
             

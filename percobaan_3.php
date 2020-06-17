@@ -3,8 +3,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 require('connection.php');
-$sql = "SELECT * from kriteria";
-$result = $conn->query($sql);
+
 
 
 
@@ -29,9 +28,11 @@ $result = $conn->query($sql);
         </style>
     </head>
     <body>
-    <select name="kriteria" id="kriteria">
+        <select name="kriteria" id="kriteria">
             <option value="">Silahkan Pilih</option>
             <?php  
+            $sql = "SELECT * from kriteria";
+            $result = $conn->query($sql);
             if ($result->num_rows > 0) {		
                 while ($obj = $result->fetch_assoc()) {
                     echo "<option value='".$obj['nama_kriteria']."'>".$obj['nama_kriteria']."</option>";
@@ -40,6 +41,19 @@ $result = $conn->query($sql);
            
              ?>
         </select>  
+
+        <select name="sekolah" id="sekolah">
+            <option value="">Silahkan Pilih</option>
+            <?php  
+            $sql3 = "SELECT * from sekolah";
+            $result3 = $conn->query($sql3);
+            if ($result3->num_rows > 0) {		
+                while ($obj = $result3->fetch_assoc()) {
+                    echo "<option value='".$obj['nama_sekolah']."'>".$obj['nama_sekolah']."</option>";
+                }
+            }           
+             ?>
+        </select> 
         <ul id="data_ul" style="display: none">
         <?php
             $sql2 = "SELECT k.nama_kriteria as kriteria_1, k2.nama_kriteria  as kriteria_2, kb.bobot FROM kriteria_bobot kb  INNER JOIN kriteria k on kb.kriteria_1 = k.idKriteria INNER JOIN kriteria k2 on kb.kriteria_2 = k2.idKriteria";
@@ -55,9 +69,12 @@ $result = $conn->query($sql);
         
            
         <div >
-            <ul id="list">
+            <ul id="list_kriteria">
                 
             </ul>
+            <ul id="list_sekolah">
+                
+                </ul>
         </div>
         <table id="tabel" >
             <thead>
@@ -84,27 +101,31 @@ $result = $conn->query($sql);
     <script>
     var kriteria = {};
     var arraylist = [];
-    var arraybobot =[];
+    var arraysekolah = [];
     
       $("#kriteria").change(function () { 
-            $("#list").empty();        
+            $("#list_kriteria").empty();        
             var name = $(this).find('option:selected').val();
-            arraylist.push(name);       
-            name = {};
-            arraybobot =[];
-            var cobs=0;       
+            arraylist.push(name);                    
              for (let i = 0; i < arraylist.length; i++) {
-                $("#list").append("<li>"+arraylist[i]+"</li>");                        
+                $("#list_kriteria").append("<li>"+arraylist[i]+"</li>");                        
             }                                                   
         });
+
+        $("#sekolah").change(function () { 
+            $("#list_sekolah").empty();        
+            var name = $(this).find('option:selected').val();
+            arraysekolah.push(name);            
+             for (let i = 0; i < arraysekolah.length; i++) {
+                $("#list_sekolah").append("<li>"+arraysekolah[i]+"</li>");                        
+            }                                                   
+        });
+
+
      
     $("#test").click(function () { 
         var ul = document.getElementById("data_ul");
         var items = ul.getElementsByTagName("li");
-        // for (var i = 0; i < items.length; ++i) {
-        //     console.log(items[i].getAttribute('data-value1'));
-        // }
-
       
         for (let i = 0; i < arraylist.length; i++) {          
             var name = $("#body"+arraylist[i]).attr("name");
@@ -126,15 +147,16 @@ $result = $conn->query($sql);
     });
 
 
+
     $("#ahp").click(function () { 
         var result = tableToArray(document.getElementsByTagName('table')[0]);
         console.log(result);
         $.ajax({
             type: "POST",
-            data: {crit: result, nama: arraylist},
+            data: {crit: result, nama: arraylist, sekolah:arraysekolah},
             url: "proses_hasil.php",
             success: function(data){
-                //document.getElementById("normalisasi").innerHTML = data;
+                document.getElementById("normalisasi").innerHTML = data;
                 console.log(data);
             }
         });
