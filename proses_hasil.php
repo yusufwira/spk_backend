@@ -5,7 +5,6 @@ require_once('proses_ahp_2.php');
 require_once __DIR__ . '/vendor/autoload.php';
 use Phpml\Math\Matrix;
 
-$matrix = $_POST['crit'];
 $nama = $_POST['nama'];
 $sekolah = $_POST['sekolah'];
 
