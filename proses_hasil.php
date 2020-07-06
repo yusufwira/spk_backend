@@ -1,12 +1,19 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Headers: *');
 require('connection.php');
 require_once('proses_ahp_2.php');
+
 require_once __DIR__ . '/vendor/autoload.php';
 use Phpml\Math\Matrix;
 
-$nama = $_POST['nama'];
-$sekolah = $_POST['sekolah'];
+// $nama = $_POST['nama'];
+// $sekolah = $_POST['sekolah'];
+
+$nama = json_decode($_POST['nama']);
+$sekolah = json_decode($_POST['sekolah']);
+
+// echo json_encode(sizeof($sekolah));
 
 
 // membuat tabel auto matis
@@ -36,7 +43,7 @@ function get_table(Array $Arr, $kriterria){
     $arr_alt = array();
     for ($i=0; $i < sizeof($Arr); $i++) { 
         for ($j=0; $j < sizeof($Arr); $j++) { 
-            $sql2 = "SELECT s.nama_sekolah as sekolah_1, s2.nama_sekolah  as sekolah_2, sb.bobot FROM sekolah_bobot sb  INNER JOIN sekolah s on sb.id_sekolah_1 = s.idSekolah INNER JOIN sekolah s2 on sb.id_sekolah_2 = s2.idSekolah INNER JOIN kriteria k on sb.id_kriteria = k.idKriteria WHERE k.nama_kriteria = '".$kriterria."'";
+            $sql2 = "SELECT s.nama_sekolah as sekolah_1, s2.nama_sekolah  as sekolah_2, sb.bobot FROM sekolah_bobot sb  INNER JOIN info_sekolah s on sb.sekolah_id_1 = s.idinfo_sekolah INNER JOIN info_sekolah s2 on sb.sekolah_id_2 = s2.idinfo_sekolah INNER JOIN kriteria k on sb.kriteria_id = k.idKriteria WHERE k.nama_kriteria ='".$kriterria."'";
             $result2 = $conn->query($sql2);
             if ($result2->num_rows > 0) {		
                 while ($obj = $result2->fetch_assoc()) {
@@ -55,12 +62,16 @@ function get_table(Array $Arr, $kriterria){
     return $arr_alt;
 }
 
+$hasil_jadi = array();
 //perhitungan kriteria
 $VE_Crit = proses_ahp($arr_crit);
 $CR_Crit = Consistancy_Ratio($arr_crit,$VE_Crit);
-echo json_encode ($VE_Crit);
-echo json_encode ($CR_Crit);
-echo json_encode ('<br><br>');
+// echo json_encode ($VE_Crit);
+// echo json_encode ($CR_Crit);
+// echo json_encode ('<br><br>');
+// $hasil_jadi['VE_CRIT']['nama'] = $nama;
+$hasil_jadi['VE_CRIT'] = $VE_Crit;
+$hasil_jadi['CR_CRIT'] = $CR_Crit;
 
 //perhitungan Alternatif
 $VE_ALT = array();
@@ -68,10 +79,11 @@ for ($i=0; $i < sizeof($nama); $i++){
     $arrAlt = get_table($sekolah,$nama[$i]);
     $hasil_VE_ALT = proses_ahp($arrAlt);
     $VE_ALT[$nama[$i]][0] = $hasil_VE_ALT;
-    $VE_ALT[$nama[$i]][1] = Consistancy_Ratio($arrAlt,$VE_ALT[$nama[$i]][0]);
+    $VE_ALT[$nama[$i]][1] = Consistancy_Ratio($arrAlt,$hasil_VE_ALT);
 }
-echo json_encode ($VE_ALT);
-echo json_encode ('<br><br>');
+// echo json_encode ($VE_ALT);
+// echo json_encode ('<br><br>');
+$hasil_jadi['VE_ALT'] = $VE_ALT;
 
 
 // WSM
@@ -88,29 +100,32 @@ for ($i=0; $i < $wsm->getColumns(); $i++) {
     foreach ($wsm->getColumnValues($i) as $Value) {
         $total_column += $Value;           
     }
-    $result[] = $total_column;
+    $result[$i]['nama'] = $sekolah[$i];
+    $result[$i]['hasil'] = $total_column;
+   
 } 
 
 
 rsort($result);
-echo  json_encode ($result);
+$hasil_jadi['Hasil_jadi'] = $result;
+echo json_encode ($hasil_jadi);
 
-echo "<table style='boder: 1 px'>";
-for ($i=0; $i < sizeof($result) ; $i++) { 
-    $j = $i+1;
-   echo '<tr>';
-   echo '<td><b>#'.$j.'</b></td>';
-   if($i == 0){
-    echo '<td>'.$sekolah[$i].' <b>(Recomendasi)</b></td>';
-   }
-   else{
-    echo '<td>'.$sekolah[$i].'</td>';
-   }
+// echo "<table style='boder: 1 px'>";
+// for ($i=0; $i < sizeof($result) ; $i++) { 
+//     $j = $i+1;
+//    echo '<tr>';
+//    echo '<td><b>#'.$j.'</b></td>';
+//    if($i == 0){
+//     echo '<td>'.$result[$i]['nama'].' <b>(Recomendasi)</b></td>';
+//    }
+//    else{
+//     echo '<td>'.$result[$i]['nama'].'</td>';
+//    }
   
-   echo '<td>'.$result[$i].'</td>';
-   echo '</tr>';
-}
-echo "</table>";
+//    echo '<td>'.$result[$i]['hasil'].'</td>';
+//    echo '</tr>';
+// }
+// echo "</table>";
 
 
 

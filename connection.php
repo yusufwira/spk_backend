@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "ahp_auto_2";
+$dbname = "tugas_akhir";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -45,7 +45,7 @@ require('connection.php');
         <select name="sekolah" id="sekolah">
             <option value="">Silahkan Pilih</option>
             <?php  
-            $sql3 = "SELECT * from sekolah";
+            $sql3 = "SELECT * from info_sekolah";
             $result3 = $conn->query($sql3);
             if ($result3->num_rows > 0) {		
                 while ($obj = $result3->fetch_assoc()) {
@@ -150,13 +150,12 @@ require('connection.php');
 
     $("#ahp").click(function () { 
         var result = tableToArray(document.getElementsByTagName('table')[0]);
-        console.log(result);
         $.ajax({
             type: "POST",
-            data: {crit: result, nama: arraylist, sekolah:arraysekolah},
+            data: { nama: arraylist, sekolah:arraysekolah},
             url: "proses_hasil.php",
             success: function(data){
-                document.getElementById("normalisasi").innerHTML = data;
+                //document.getElementById("normalisasi").innerHTML = data;
                 console.log(data);
             }
         });
