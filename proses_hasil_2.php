@@ -1,34 +1,34 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Headers: *');
-require('connection.php');
+//require('connection.php');
 require_once('proses_ahp_2.php');
 //require_once('proses_jarak.php');
 
 require_once __DIR__ . '/vendor/autoload.php';
 use Phpml\Math\Matrix;
 
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "ahp_auto_2";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "ahp_auto_2";
 
-// $conn = new mysqli($servername, $username, $password, $dbname);
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// }
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-//   $list_kriteria = ['Fasilitas','Akademis','Ekstrakurikuler','Biaya'];
-//   $list_sekolah = ['SD Al-Muttaqien','SD RADEN PAKU','SD PAKIS JAYA'];
-$list_kriteria = json_decode($_POST['nama']);
-$list_sekolah = json_decode($_POST['sekolah']);
+  $list_kriteria = ['Fasilitas','Akademis','Ekstrakurikuler','Biaya'];
+  $list_sekolah = ['SD Al-Muttaqien','SD RADEN PAKU','SD PAKIS JAYA'];
+//$list_kriteria = json_decode($_POST['nama']);
+//$list_sekolah = json_decode($_POST['sekolah']);
 
 
 
 // membuat tabel auto matis
 function get_table_kriteria($list_kriteria){
-    require('connection.php');
-    //$conn = new mysqli("localhost", "root", "", "ahp_auto_2");
+    //require('connection.php');
+    $conn = new mysqli("localhost", "root", "", "ahp_auto_2");
 
     $arr_crit = array();
     for ($i=0; $i < sizeof($list_kriteria); $i++) { 
@@ -54,8 +54,8 @@ function get_table_kriteria($list_kriteria){
 
 
 function auto_data(){
-    require('connection.php');
-    //$conn = new mysqli("localhost", "root", "", "ahp_auto_2");
+    //require('connection.php');
+    $conn = new mysqli("localhost", "root", "", "ahp_auto_2");
 
     $sql_sekolah = "SELECT * FROM info_sekolah";
     $result_infosekolah = $conn->query($sql_sekolah);
@@ -551,20 +551,38 @@ $CR_Crit = Consistancy_Ratio($tabel_kreteria,$VE_Crit);
 $hasil_jadi['VE_CRIT'] = $VE_Crit;
 $hasil_jadi['CR_CRIT'] = $CR_Crit;
 
+echo json_encode($tabel_kreteria);
+echo "<BR>";
+echo "<BR>";
+
+
 $VE_ALT = array();
 for ($i=0; $i < sizeof($list_kriteria); $i++){
     $arrAlt = get_table_sekolah($list_sekolah,$autos,$list_kriteria[$i]);
-    $hasil_VE_ALT = proses_ahp($arrAlt);
-    $VE_ALT[$list_kriteria[$i]][0] = $hasil_VE_ALT;
-    $VE_ALT[$list_kriteria[$i]][1] = Consistancy_Ratio($arrAlt,$hasil_VE_ALT);
+
+    echo json_encode($arrAlt);
+    echo "<BR>";
+    echo json_encode($list_kriteria[$i]);
+    echo "<BR>";
+    echo json_encode($list_sekolah);
+    echo "<BR>";
+    echo json_encode($autos[$list_kriteria[$i]]);
+    echo "<BR>";
+    echo "<BR>";
+    //$hasil_VE_ALT = proses_ahp($arrAlt);
+    //$VE_ALT[$list_kriteria[$i]][0] = $hasil_VE_ALT;
+    //$VE_ALT[$list_kriteria[$i]][1] = Consistancy_Ratio($arrAlt,$hasil_VE_ALT);
 }
-$hasil_jadi['VE_ALT'] = $VE_ALT;
+//$hasil_jadi['VE_ALT'] = $VE_ALT;
 
 
 $result = WSM($VE_Crit,$VE_ALT,$list_kriteria,$list_sekolah);
 rsort($result);
 $hasil_jadi['Hasil_jadi'] = $result;
-echo json_encode($hasil_jadi)
+
+
+
+
 
 ?>
 

@@ -175,6 +175,58 @@
          
 
     }
+
+
+    function Consistancy_Ratio(Array $matrixs, Array $VE){
+        $matrix = new Matrix($matrixs);
+       
+        $array_total_column =[];
+        for ($i=0; $i < $matrix->getColumns(); $i++) { 
+            $total_column= 0.0;
+            foreach ($matrix->getColumnValues($i) as $Value) {
+                $total_column += $Value;           
+            }
+            $array_total_column[] = $total_column;
+        }                  
+         $lamdamax = 0.0;
+        for($i=0; $i < sizeof($VE); $i++) {           
+          $lamdamax = ($array_total_column[$i]*$VE[$i]);
+        }
+        return $lamdamax;
+     
+        $CI = ($lamdamax -  $matrix->getRows()) - ($matrix->getRows() - 1);
+        $RI = 0.0;
+        if( $matrix->getRows() == 2){
+            $RI = 0;
+        }
+        else if( $matrix->getRows() == 3){
+            $RI = 0.58;
+        }
+        else if( $matrix->getRows() == 4){
+            $RI = 0.9;
+        }
+        else if( $matrix->getRows() == 5){
+            $RI = 1.12;
+        }
+        else if( $matrix->getRows() == 6){
+            $RI = 1.24;
+        }
+        else if( $matrix->getRows() == 7){
+            $RI = 1.32;
+        }
+        else if( $matrix->getRows() == 8){
+            $RI = 1.41;
+        }
+        else if( $matrix->getRows() == 9){
+            $RI = 1.45;
+        }
+        else if( $matrix->getRows() == 10){
+            $RI = 1.49;
+        }
+
+        $CR = ($CI / $RI)*100;
+        return $CR;
+    }
     
     
   

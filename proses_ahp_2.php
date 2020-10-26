@@ -4,8 +4,10 @@
     
  
     function proses_ahp(Array $matrixs){
+
         $matrix = new Matrix($matrixs);
         $arrayMatrix = $matrix->toArray();
+
         //MENGECEK APAKAH MATRIX CONSISTAN ATO TIDAK
         //penjumlahan setiap kolom step 1 normalisasi
         $array_total_column =[];
@@ -86,7 +88,7 @@
             }
             $checks = [];
             for ($i=0; $i < sizeof($sVE) ; $i++) { 
-                if($sVE[$i] <= 0.0001){
+                if($sVE[$i] <= 0.001){
                     $checks[] = 1;                   
                 }
                 else{
@@ -160,3 +162,4 @@
     
     
 ?>
+

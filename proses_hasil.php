@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Headers: *');
 require('connection.php');
-require_once('proses_ahp_2.php');
+require_once('proses_ahp.php');
 
 require_once __DIR__ . '/vendor/autoload.php';
 use Phpml\Math\Matrix;
