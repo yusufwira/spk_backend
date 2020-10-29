@@ -6,13 +6,13 @@ require('connection.php');
 require_once('proses_ahp_2.php');
 require_once __DIR__ . '/vendor/autoload.php';
 use Phpml\Math\Matrix;
-$list_kriteria = json_decode($_POST['nama']);
-$list_sekolah = json_decode($_POST['sekolah']);
-$jarak = json_decode($_POST['jarak']);
+// $list_kriteria = json_decode($_POST['nama']);
+// $list_sekolah = json_decode($_POST['sekolah']);
+// $jarak = json_decode($_POST['jarak']);
 
-// $list_kriteria = ["Fasilitas","Akademis","Ekstrakurikuler"];
-// $list_sekolah = ["SD YBPK-3", "SD RADEN PAKU 2","SD Al Azhar Kepala Gading"];
-// $jarak = ["4.491","14.819","3.391","20.34"];
+$list_kriteria = ["Fasilitas","Akademis","Ekstrakurikuler"];
+$list_sekolah = ["SD YBPK-3", "SD RADEN PAKU 2","SD Al Azhar Kepala Gading"];
+$jarak = ["4.491","14.819","3.391","20.34"];
 
 
 
