@@ -4,8 +4,7 @@
 
     // Load Data Dummy School Finder
     MasterData();
-    // DummyAdminSekolah();
-    // DummyInfoSekolah();
+    DummyInfoSekolah();
     // DummyEsktrkurikuler();
     // DummyDetailSekolah();    
 
@@ -27,32 +26,7 @@
             $nama = $ekskul[$i];
             $stmt->execute();
         }
-    }
-   
-
-   
-    function DummyAdminSekolah()
-    {
-        require('../connection.php');
-        $stmt = $conn->prepare("INSERT INTO users (id_users,username, password,hak_akses, nama_user) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("issss", $id, $username, $passwod, $hak, $namaUser);
-        for ($i=0; $i < 5 ; $i++) { 
-            $id = '10'.$i;
-            $username = 'dummy_sekolah_'.$i;
-            $passwod = md5('sekolah');
-            $hak = 'admin_sekolah';
-            $namaUser = 'Admin Sekolah'.$id;
-            if ($stmt->execute() == true) {
-                echo $username. " Successfuly";
-                echo '<br>';
-            } else {
-                echo $username. " does exist in database";
-                echo '<br>';
-            }
-        }
-        $stmt->close();
-    }
-
+    }          
 
 
     function DummyInfoSekolah()
@@ -64,7 +38,10 @@
         while ( $data = fgetcsv($fh))   {
             $faq [ $data[0] ] = array_combine($header, $data);
         }
-        fclose($fh);    
+        fclose($fh);  
+        // INSERT ADMIN SEKOLAH
+        $admin = $conn->prepare("INSERT INTO users (id_users,username, password,hak_akses, nama_user) VALUES (?, ?, ?, ?, ?)");
+        $admin->bind_param("issss", $id, $username, $passwod, $hak, $namaUser);
     
         // INSERT INFO SEKOLAH
         $stmt = $conn->prepare("INSERT INTO info_sekolah (npsn,nama_sekolah,alamat_sekolah,notelp_sekolah,kecamatan,agama,nama_kepala_sekolah,jam_sekolah,status_sekolah,keterangan_status_sekolah,users_id_users) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -75,6 +52,13 @@
         $foto->bind_param("isss", $idFoto, $namaFoto, $ext, $npsp);
     
         for ($i=0; $i < sizeof($faq); $i++) { 
+            $id = '10'.$i;
+            $username = $faq[$i]['npsn'];
+            $passwod = md5('sekolah');
+            $hak = 'admin_sekolah';
+            $namaUser = 'Admin Sekolah'.$id;
+
+
             $npsp = $faq[$i]['npsn'];
             $namaSekolah = $faq[$i]['nama_sekolah'];
             $alamat = $faq[$i]['alamat_sekolah'];
@@ -89,7 +73,15 @@
             
             $idFoto = '100'.$i;
             $namaFoto = 'default';
-            $ext = 'jpg';           
+            $ext = 'jpg';   
+            
+            if ($admin->execute() == true) {
+                echo $username. " Successfuly";
+                echo '<br>';
+            } else {
+                echo $username. " does exist in database";
+                echo '<br>';
+            }
             
             if ($stmt->execute() == true) {                
                 echo $faq[$i]['nama_sekolah']. " Successfuly";
@@ -101,6 +93,7 @@
             
             $foto->execute();
         }    
+        $admin->close();
         $stmt->close(); 
         $foto->close();
     }
