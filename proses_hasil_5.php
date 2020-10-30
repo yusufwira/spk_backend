@@ -6,13 +6,13 @@ require('connection.php');
 require_once('proses_ahp_2.php');
 require_once __DIR__ . '/vendor/autoload.php';
 use Phpml\Math\Matrix;
-// $list_kriteria = json_decode($_POST['nama']);
-// $list_sekolah = json_decode($_POST['sekolah']);
-// $jarak = json_decode($_POST['jarak']);
+$list_kriteria = json_decode($_POST['nama']);
+$list_sekolah = json_decode($_POST['sekolah']);
+$jarak = json_decode($_POST['jarak']);
 
-$list_kriteria = ["Fasilitas","Akademis","Ekstrakurikuler"];
-$list_sekolah = ["SD YBPK-3", "SD RADEN PAKU 2","SD Al Azhar Kepala Gading"];
-$jarak = ["4.491","14.819","3.391","20.34"];
+// $list_kriteria = ["Fasilitas","Akademis","Ekstrakurikuler"];
+// $list_sekolah = ["SD Al Islam", "SDIT PERMATA","SD Al azhar 35"];
+// $jarak = ["4.491","14.819","3.391","20.34"];
 
 
 
@@ -191,9 +191,13 @@ function auto_data($jarak, $list_sekolah ){
                 for ($j=0; $j <= $i; $j++) {
                     $n_s1 = 0;
                     $n_s2 = 0;
-                    if($id_sekolah[$i] != $id_sekolah[$j]){
+                    if($id_sekolah[$i] != $id_sekolah[$j]){                        
                         $n_s1 = $jarak[$i];
                         $n_s2 = $jarak[$j];
+
+                        // print_r($jarak[$i].' '.$jarak[$j].'<br>');
+                        // print_r($n_s1/$n_s2.'<br>');
+                        // print_r($n_s2/$n_s1.'<br>');
                      
                         $temp = array('sekolah_1' => $nama_sekolah[$i], 'sekolah_2' => $nama_sekolah[$j], 'bobot' => $n_s1/$n_s2);                   
                         $hasil_data[$kriteria['nama_kriteria']][] = $temp;
