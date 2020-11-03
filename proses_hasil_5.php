@@ -72,7 +72,7 @@ function get_table_subkriteria($kriteria){
 function auto_data($jarak, $list_sekolah ){
     require('connection.php');
     // require_once('proses_ahp_2.php');
-    $sql_sekolah = "SELECT * FROM info_sekolah";
+    $sql_sekolah = "SELECT * FROM info_sekolah where status_sekolah = 'Tervalidasi'";
     $result_infosekolah = $conn->query($sql_sekolah);
     $id_sekolah = array();
     $z =0;
