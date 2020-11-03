@@ -152,7 +152,7 @@
             $RI = 1.49;
         }
 
-        $CR = ($CI / $RI)*100;
+        $CR = round((($CI / $RI)*100),4);
         return $CR;
     }
     

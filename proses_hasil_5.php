@@ -43,6 +43,7 @@ function get_table_kriteria($list_kriteria){
 
 function get_table_subkriteria($kriteria){
     require('connection.php');
+    
     $arr_subcrit = array();
     $sql = "SELECT * FROM subkriteria_bobot sb WHERE sb.sub_2 in (SELECT kd.iddetail_kriteria FROM kriteria k INNER JOIN kriteria_detail kd on k.idkriteria=kd.kriteria_idkriteria WHERE k.nama_kriteria = '$kriteria')";
     $result = $conn->query($sql);
@@ -70,6 +71,7 @@ function get_table_subkriteria($kriteria){
 
 function auto_data($jarak, $list_sekolah ){
     require('connection.php');
+    // require_once('proses_ahp_2.php');
     $sql_sekolah = "SELECT * FROM info_sekolah";
     $result_infosekolah = $conn->query($sql_sekolah);
     $id_sekolah = array();

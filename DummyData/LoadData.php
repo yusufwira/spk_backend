@@ -38,6 +38,16 @@
     {
         require('../connection.php');
 
+
+        // DELETE RATING
+        $rating = $conn->prepare("DELETE FROM rating ");
+        $rating->execute();
+
+        // DELETE REVIEW
+        $review = $conn->prepare("DELETE FROM review ");
+        $review->execute();
+
+
         // DELETE FOTO SEKOLAH
         $deleteFoto = $conn->prepare("DELETE FROM foto_sekolah ");
         $deleteFoto->execute();
@@ -108,7 +118,7 @@
             $idUser = '10'.$i;
             
             $idFoto = '100'.$i;
-            $namaFoto = 'default';
+            $namaFoto = '1';
             $ext = 'jpg';   
             
             if ($admin->execute() == true) {
