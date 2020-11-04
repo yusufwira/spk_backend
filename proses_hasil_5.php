@@ -10,9 +10,9 @@ $list_kriteria = json_decode($_POST['nama']);
 $list_sekolah = json_decode($_POST['sekolah']);
 $jarak = json_decode($_POST['jarak']);
 
-// $list_kriteria = ["Fasilitas","Akademis","Ekstrakurikuler"];
-// $list_sekolah = ["SD Al Islam", "SDIT PERMATA","SD Al azhar 35"];
-// $jarak = ["4.491","14.819","3.391","20.34"];
+// $list_kriteria = ["Fasilitas","Akademis","Biaya"];
+// $list_sekolah = ["SD JAC School","SD Al Islam","SD VITA","SD Katolik Kristus Raja"];
+// $jarak = ["1.525","3.797","12.931","2.952","20.01","5.718","2.259","6.863","2.502"];
 
 
 
@@ -65,6 +65,8 @@ function get_table_subkriteria($kriteria){
         $i++;
     }
 
+    // var_dump(sizeof($value)+$temp_key[0]);
+    // var_dump($arr_subcrit);
     return $arr_subcrit_2;
 }
 
@@ -217,6 +219,7 @@ function auto_data($jarak, $list_sekolah ){
 
         if($id_kriteria != 3 && $id_kriteria != 4){
             $subtable = get_table_subkriteria($nama_kriteria);
+            // die();
             $VE_Crit = proses_ahp($subtable);
             //console_log($nama_kriteria);
             //console_log($VE_Crit);

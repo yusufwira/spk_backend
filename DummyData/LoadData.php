@@ -3,26 +3,28 @@
 
 
     // Load Data Dummy School Finder
-    MasterData();
+    
     DummyInfoSekolah();
+    MasterData();
 
     function MasterData(){
         $ekskul = ['Melukis','Drum Band','Tapak Suci','Karate','Taekwondo','Paduan Suara','Pramuka','Robotika',
         'Tari','Tataboga','Mengaji','Musik','Sepak Bola','Basket','Softball','Kerajinan Tangan',
         'Menjahit','Nasyid','Karawitan','Fotografi / Sinematografi','Mading','Paskibra','Komputer',
-        'Korahanian','Bahasa','Drama/Teather','Multimedia', 'Tenis', 'Tenis Meja', 'Catur', 'Memanah', 'Berenag', 
+        'Korahanian','Bahasa','Drama/Teather','Multimedia', 'Tenis', 'Tenis Meja', 'Catur', 'Memanah', 'Renang', 
         'Futsal', 'Kolintang', 'Gamelang'];
 
         require('../connection.php');
         $delete = $conn->prepare("DELETE FROM ekstrakurikuler ");
         $delete->execute();
 
-        $stmt = $conn->prepare("INSERT INTO ekstrakurikuler (idekstrakurikuler, nama_eks) VALUES (?, ?)");
-        $stmt->bind_param("is", $id, $nama);
+        $stmt = $conn->prepare("INSERT INTO ekstrakurikuler (idekstrakurikuler, nama_eks, keterangan) VALUES (?, ?, ?)");
+        $stmt->bind_param("iss", $id, $nama, $ket);
 
         for ($i=0; $i < sizeof($ekskul) ; $i++) { 
             $id = $i+1;
             $nama = $ekskul[$i];
+            $ket = 'Tervalidasi';
             $stmt->execute();
         }
     }  
