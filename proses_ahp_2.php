@@ -74,7 +74,7 @@
         $VE= [];
         $normalisasi = 0.0;     
         for ($i=0; $i < sizeof($arr_count_rows) ; $i++) { 
-            $normalisasi = round($arr_count_rows[$i]/$total_count_row,4);
+            $normalisasi = $arr_count_rows[$i]/$total_count_row;
             $VE[] = $normalisasi;          
             
         }      
@@ -115,14 +115,14 @@
                 $total_column += $Value;           
             }
             $array_total_column[] = $total_column;
-        }                  
-         $lamdamax = 0.0;
-        for($i=0; $i < sizeof($VE); $i++) {           
-          $lamdamax = ($array_total_column[$i]*$VE[$i]);
         }
-        return $lamdamax;
+        $lamdamax = 0.0;
+        for($i=0; $i < sizeof($VE); $i++) {           
+          $lamdamax += ($array_total_column[$i]*$VE[$i]);
+        }
+        // return $lamdamax;
      
-        $CI = ($lamdamax -  $matrix->getRows()) - ($matrix->getRows() - 1);
+        $CI = ($lamdamax -  $matrix->getRows())/($matrix->getRows()-1);
         $RI = 0.0;
         if( $matrix->getRows() == 2){
             $RI = 0;
@@ -152,8 +152,8 @@
             $RI = 1.49;
         }
 
-        $CR = round((($CI / $RI)*100),4);
-        return $CR;
+        $CR = $CI/$RI;
+        return $CR*100;
     }
     
     
