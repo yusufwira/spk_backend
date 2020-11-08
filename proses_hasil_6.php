@@ -10,8 +10,11 @@ use Phpml\Math\Matrix;
 // $list_sekolah = json_decode($_POST['sekolah']);
 // $jarak = json_decode($_POST['jarak']);
 
-$list_kriteria = ["Fasilitas","Akademis","Ekstrakurikuler"];
-$list_sekolah = ["SD JAC School","SD VITA", "SD Al azhar 35"];
+// $list_kriteria = ["Fasilitas","Akademis","Ekstrakurikuler"];
+// $list_sekolah = ["SD JAC School","SD VITA", "SD Al azhar 35"];
+
+$list_kriteria = ["Fasilitas"];
+$list_sekolah = ["SD JAC School","SD Al Islam"];
 $jarak = ["1.525","3.797","12.931","2.952","20.01","5.718","2.259","6.863","2.502"];
 
 

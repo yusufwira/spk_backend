@@ -330,7 +330,7 @@ function WSM($VE_Crit,$VE_ALT,$list_kriteria,$list_sekolah){
             $total_column += $Value;           
         }
         $result[$i]['hasil'] = $total_column;
-        $result[$i]['nama'] = $list_sekolah[$i];                        
+        $result[$i]['nama'] = $list_sekolah[$i];
     } 
     return $result;
 }

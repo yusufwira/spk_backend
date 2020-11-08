@@ -152,7 +152,13 @@
             $RI = 1.49;
         }
 
-        $CR = $CI/$RI;
+        // var_dump($CI."/".$RI);die();
+        if ($RI == 0) {
+            $CR = 0;
+        }
+        else{
+            $CR = $CI/$RI;
+        }
         return $CR*100;
     }
     
