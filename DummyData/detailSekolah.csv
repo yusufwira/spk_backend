@@ -104,8 +104,8 @@
 102,20109251,13,500,Luas Tanah Terbuka (m2)
 103,20109251,14,20,Jumlah Kelas
 104,20109251,15,20,Jumlah Kelas terdaoa ac
-105,20109251,16,0,Jumlah Perpustakaan
-106,20109251,17,0,Jumlah Lab
+105,20109251,16,1,Jumlah Perpustakaan
+106,20109251,17,1,Jumlah Lab
 107,20109251,18,21500000,Uang Gedung
 108,20109251,19,5000000,Uang Daftar Ulang
 109,20109251,20,1700000,Uang Spp

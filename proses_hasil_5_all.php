@@ -6,16 +6,22 @@ require('connection.php');
 require_once('proses_ahp_2.php');
 require_once __DIR__ . '/vendor/autoload.php';
 use Phpml\Math\Matrix;
-// $list_kriteria = json_decode($_POST['nama']);
+$list_kriteria = json_decode($_POST['nama']);
 // $list_sekolah = json_decode($_POST['sekolah']);
-// $jarak = json_decode($_POST['jarak']);
+$jarak = json_decode($_POST['jarak']);
 
-// $list_kriteria = ["Fasilitas","Akademis","Ekstrakurikuler"];
-// $list_sekolah = ["SD JAC School","SD VITA", "SD Al azhar 35"];
+$sqlSchool = "SELECT nama_sekolah FROM info_sekolah where status_sekolah = 'Tervalidasi'";
+$allSchool = $conn->query($sqlSchool);
+$list_sekolah = [];
+if ($allSchool->num_rows > 0) {
+    while ($obj = $allSchool->fetch_assoc()) {
+        $list_sekolah[] = $obj['nama_sekolah'];
+    }
+}
 
-$list_kriteria = ["Fasilitas"];
-$list_sekolah = ["SD JAC School","SD Al Islam"];
-$jarak = ["1.525","3.797","12.931","2.952","20.01","5.718","2.259","6.863","2.502"];
+// $list_kriteria = ["Fasilitas","Akademis","Biaya"];
+// $list_sekolah = ["SD JAC School","SD Al Islam","SD VITA","SD Katolik Kristus Raja"];
+// $jarak = ["1.525","3.797","12.931","2.952","20.01","5.718","2.259","6.863","2.502"];
 
 
 
@@ -39,7 +45,7 @@ function get_table_kriteria($list_kriteria){
             }
         }
     }
-    console_log($arr_crit);
+    
     return  $arr_crit;
 }
 
@@ -87,9 +93,8 @@ function auto_data($jarak, $list_sekolah ){
         $z++;
     }
 
-   
     $sql_kriteria = "SELECT * FROM kriteria k ";
-    $result_kriteria = $conn->query($sql_kriteria);
+    $result_kriteria = $conn->query($sql_kriteria);   
     
     while ($kriteria = $result_kriteria->fetch_assoc()){
         $id_kriteria = $kriteria['idkriteria'];
@@ -225,8 +230,8 @@ function auto_data($jarak, $list_sekolah ){
             $subtable = get_table_subkriteria($nama_kriteria);
             // die();
             $VE_Crit = proses_ahp($subtable);
-            // console_log($nama_kriteria);
-            console_log($subtable);
+            //console_log($nama_kriteria);
+            //console_log($VE_Crit);
             $VE_alts = array();
             for ($i=0; $i < sizeof($list_subkriteria[$nama_kriteria]); $i++) { 
                 $datas = $hasil_data[$nama_kriteria][$list_subkriteria[$nama_kriteria][$i]];
@@ -334,7 +339,7 @@ function WSM($VE_Crit,$VE_ALT,$list_kriteria,$list_sekolah){
             $total_column += $Value;           
         }
         $result[$i]['hasil'] = $total_column;
-        $result[$i]['nama'] = $list_sekolah[$i];                        
+        $result[$i]['nama'] = $list_sekolah[$i];
     } 
     return $result;
 }
@@ -355,20 +360,19 @@ $hasil_jadi = array();
 $crit = get_table_kriteria($list_kriteria);
 $VE_Crit = proses_ahp($crit);
 $CR_Crit = Consistancy_Ratio($crit,$VE_Crit);
-// console_log($VE_Crit);
-// console_log($CR_Crit);die();
+//console_log($VE_Crit);
 $hasil_jadi['VE_CRIT'] = $VE_Crit;
 $hasil_jadi['CR_CRIT'] = $CR_Crit;
 
 $VE_ALT = array();
 $autos = auto_data($jarak, $list_sekolah );
-console_log($autos);
+//console_log($autos);
 $hasil_jadi['VE_ALT'] = $autos;
 
 
 
 $result = WSM($VE_Crit,$autos,$list_kriteria,$list_sekolah);
-console_log($result);
+//console_log($result);
 rsort($result);
 
 $hasil_jadi['Hasil_jadi'] = $result;
