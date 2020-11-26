@@ -4,15 +4,23 @@
     
     //  $matrix = new Matrix($_POST['crit']);
     //  $nama = $_POST['nama'];
-    function proses_ahp(Array $matrixs, Array $nama){
+    function proses_ahp(Array $matrixs, Array $nama, $keterangan){
         //pembuatan tabel
         $matrix = new Matrix($matrixs);
         $arrayMatrix = $matrix->toArray();
-        echo "<table style='boder: 1 px'>";
-        for ($i=0; $i < $matrix->getRows(); $i++) { 
-            echo "<tr>";
+        echo "<h2>".$keterangan."</h2>";
+        echo "<table style='border: 1px solid black; border-collapse: collapse;'>";
+        echo "<tr style='border: 1px solid black;'>
+        <th style='border: 1px solid black;'></th>";
+        for ($i=0; $i < count($nama) ; $i++) { 
+            echo "<th style='border: 1px solid black;'>".$nama[$i]."</th>";
+        }
+        echo "</tr>";
+        for ($i=0; $i < $matrix->getRows(); $i++) {
+            echo "<tr style='border: 1px solid black'>";
+            echo "<td style='border: 1px solid black;'>".$nama[$i]."</td>";
             for ($j=0; $j < $matrix->getColumns(); $j++) { 
-                echo "<td style='color:red'>".round($arrayMatrix[$i][$j],4)."</td>";
+                echo "<td style='color:red; border: 1px solid black;'>".round($arrayMatrix[$i][$j],4)."</td>";
             }
             echo "</tr>";
         }
@@ -22,31 +30,38 @@
         //penjumlahan setiap kolom step 1 normalisasi
         echo "<tr>";
         $array_total_column =[];
+        echo "<td style='color:blue'></td>";
         for ($i=0; $i < $matrix->getColumns(); $i++) { 
             $total_column= 0.0;
             foreach ($matrix->getColumnValues($i) as $Value) {
                 $total_column += $Value;           
             }
-            $array_total_column[] = $total_column;
-            echo "<td style='color:blue' width=70px>".round($total_column,4)."</td>";
+            $array_total_column[] = $total_column;            
+            echo "<td style='color:blue'>".round($total_column,4)."</td>";
         }
         echo "</tr>";
         echo "</table>";
         echo "<br>";
-        echo "<table style='boder: 1 px'>";
 
         //pembagian hasil penjumlahan pada masing masing bobot step 2 normalisasi
+        echo "<table style='border: 1px solid black; border-collapse: collapse;'>";
+        echo "<tr style='border: 1px solid black;'>
+        <th style='border: 1px solid black;'></th>";
+        for ($i=0; $i < count($nama) ; $i++) { 
+            echo "<th style='border: 1px solid black;'>".$nama[$i]."</th>";
+        }        
         $arr_total_rows = []; 
         $normalisasi = 0.0;
         $kosistancy = true;
         $new_matrix = [];
         for ($i=0; $i < $matrix->getRows(); $i++) { 
-            echo "<tr>";
+            echo "<tr style='border: 1px solid black'>";
+            echo "<td style='border: 1px solid black;'>".$nama[$i]."</td>";
             $total_rows=0.0; 
             for ($j=0; $j < $matrix->getColumns(); $j++) {
                 $normalisasi = $arrayMatrix[$i][$j]/$array_total_column[$j];
                 $total_rows += $normalisasi;  
-                echo "<td style='color:green' width=70px>".round($normalisasi,4)."</td>";
+                echo "<td style='color:green; border: 1px solid black;' width=70px>".round($normalisasi,4)."</td>";
                 $new_matrix[$i][$j] = $normalisasi;
             }
 
@@ -63,35 +78,38 @@
         if($kosistancy == false){
             echo "Matrix Tidak Konsisten";
             echo "<br>";
+            $data = Iterasi($matrix, false, $arr = array(), $nama);
             echo "<br>";
-            $data = Iterasi($matrix, false, $arr = array());
-            echo "Hasil AHP";
-            echo "<table style='boder: 1 px'>";
-            for ($i=0; $i < sizeof($data); $i++) { 
-                echo "<tr>";
-                echo "<td>".$nama[$i]."</td>";
-                echo "<td>".$data[$i]."</td>";            
+            echo "Hasil VE";
+            echo "<table style='border: 1px solid black; border-collapse: collapse;'>";
+            for ($i=0; $i < sizeof($data); $i++) {
+                echo "<tr style='border: 1px solid black;'>";
+                echo "<td style='border: 1px solid black;'>".$nama[$i]."</td>";
+                echo "<td style='border: 1px solid black;'>".$data[$i]."</td>";            
                 echo "</tr>";                  
             }
             echo "</table>";
+            echo "<br>";
             return $data;
         }
         else{
             $data = [];
             echo "Matrix Konsisten";
+            echo "<br>";
             $Newmatrix = new Matrix($new_matrix);
             $Newmatrix_hasil = $Newmatrix->toArray();
             echo "<br>";
-            echo "Hasil AHP";
-            echo "<table style='boder: 1 px'>";
+            echo "Hasil VE";
+            echo "<table style='border: 1px solid black; border-collapse: collapse;'>";
             for ($i=0; $i < $Newmatrix->getRows(); $i++) { 
-                echo "<tr>";
-                echo "<td>".$nama[$i]."</td>";
-                echo "<td>".$Newmatrix_hasil[$i][0]."</td>";            
+                echo "<tr style='border: 1px solid black;'>";
+                echo "<td style='border: 1px solid black;'>".$nama[$i]."</td>";
+                echo "<td style='border: 1px solid black;'>".$Newmatrix_hasil[$i][0]."</td>";            
                 echo "</tr>"; 
                 $data[] = $Newmatrix_hasil[$i][0];          
             }
             echo "</table>";
+            echo "<br>";
             return $data;
         }
     }
@@ -101,17 +119,24 @@
 
 
     // Iterasi perhitungan jika matrix tidak konsisten
-    function Iterasi(Matrix $matrix, bool $check, array $vectorEigen){
+    function Iterasi(Matrix $matrix, bool $check, array $vectorEigen, array $nama){
         $sMatrix = $matrix->multiply($matrix);
         $arrayMatrix = $sMatrix->toArray();
-        echo "<table style='boder: 1 px'>";
+        echo "<br>";
+        echo "<table style='border: 1px solid black; border-collapse: collapse;'>";
+        echo "<tr style='border: 1px solid black;'>
+        <th style='border: 1px solid black;'></th>";
+        for ($i=0; $i < count($nama) ; $i++) { 
+            echo "<th style='border: 1px solid black;'>".$nama[$i]."</th>";
+        }   
         $arr_count_rows= [];
         $total_count_row = 0.0;
         for ($i=0; $i < $sMatrix->getRows(); $i++) { 
-            echo "<tr>";
+            echo "<tr style='border: 1px solid black;'>";
+            echo "<td style= 'border: 1px solid black;'>".$nama[$i]."</td>";
             $count_rows= 0.0;
             for ($j=0; $j < $sMatrix->getColumns(); $j++) { 
-                echo "<td style='color:red'>".round($arrayMatrix[$i][$j],4)."</td>";
+                echo "<td style='color:red; border: 1px solid black;'>".round($arrayMatrix[$i][$j],4)."</td>";
                 $count_rows += $arrayMatrix[$i][$j];
             }
             $arr_count_rows[] = $count_rows;
@@ -136,11 +161,10 @@
         $sVE= [];
         if($check == false && $vectorEigen == null){
   
-            return Iterasi($sMatrix, false, $VE);
+            return Iterasi($sMatrix, false, $VE, $nama);
   
         }
         else if ($check == false && $vectorEigen != null){
-            echo "<br>";
             echo "Delta VE";
             echo "<br>";
             for ($i=0; $i < sizeof($VE) ; $i++) { 
@@ -150,7 +174,7 @@
             }
             $checks = [];
             for ($i=0; $i < sizeof($sVE) ; $i++) { 
-                if($sVE[$i] <= 0.0001){
+                if($sVE[$i] <= 0.001){
                     $checks[] = 1;                   
                 }
                 else{
@@ -160,14 +184,10 @@
             }
 
             if(in_array(0, $checks, TRUE)){
-               return Iterasi($sMatrix, false, $VE);
+               return Iterasi($sMatrix, false, $VE, $nama);
             }
    
             return $VE;
-            
-            
-            
-            
             
         }
         
@@ -187,14 +207,14 @@
                 $total_column += $Value;           
             }
             $array_total_column[] = $total_column;
-        }                  
-         $lamdamax = 0.0;
-        for($i=0; $i < sizeof($VE); $i++) {           
-          $lamdamax = ($array_total_column[$i]*$VE[$i]);
         }
-        return $lamdamax;
+        $lamdamax = 0.0;
+        for($i=0; $i < sizeof($VE); $i++) {           
+          $lamdamax += ($array_total_column[$i]*$VE[$i]);
+        }
+        // return $lamdamax;
      
-        $CI = ($lamdamax -  $matrix->getRows()) - ($matrix->getRows() - 1);
+        $CI = ($lamdamax -  $matrix->getRows())/($matrix->getRows()-1);
         $RI = 0.0;
         if( $matrix->getRows() == 2){
             $RI = 0;
@@ -224,8 +244,14 @@
             $RI = 1.49;
         }
 
-        $CR = ($CI / $RI)*100;
-        return $CR;
+        // var_dump($CI."/".$RI);die();
+        if ($RI == 0) {
+            $CR = 0;
+        }
+        else{
+            $CR = $CI/$RI;
+        }
+        return $CR*100;
     }
     
     
