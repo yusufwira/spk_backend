@@ -4,7 +4,7 @@
 2,20531862,8,21,Jumlah Staff
 3,20531862,9,4,Jumlah Guru Bersertifikasi
 4,20531862,10,405,Jumlah Lulusan
-5,20531862,11,0,Internet
+5,20531862,11,1,Internet
 6,20531862,12,600,Luas Sekolah (M2)
 7,20531862,13,600,Luas Tanah Terbuka (m2)
 8,20531862,14,15,Jumlah Kelas
@@ -21,13 +21,13 @@
 19,20572027,6,4,Akreditasi
 20,20572027,7,2013,Tahun Kurikulum
 21,20572027,8,11,Jumlah Staff
-22,20572027,9,0,Jumlah Guru Bersertifikasi
+22,20572027,9,1,Jumlah Guru Bersertifikasi
 23,20572027,10,262,Jumlah Lulusan
 24,20572027,11,1,Internet
 25,20572027,12,400,Luas Sekolah (M2)
 26,20572027,13,100,Luas Tanah Terbuka (m2)
 27,20572027,14,11,Jumlah Kelas
-28,20572027,15,0,Jumlah Kelas terdaoa ac
+28,20572027,15,1,Jumlah Kelas terdaoa ac
 29,20572027,16,1,Jumlah Perpustakaan
 30,20572027,17,1,Jumlah Lab
 31,20572027,18,10900000,Uang Gedung
@@ -61,11 +61,11 @@
 59,20533144,8,9,Jumlah Staff
 60,20533144,9,2,Jumlah Guru Bersertifikasi
 61,20533144,10,168,Jumlah Lulusan
-62,20533144,11,0,Internet
+62,20533144,11,1,Internet
 63,20533144,12,3000,Luas Sekolah (M2)
 64,20533144,13,2600,Luas Tanah Terbuka (m2)
 65,20533144,14,8,Jumlah Kelas
-66,20533144,15,0,Jumlah Kelas terdaoa ac
+66,20533144,15,1,Jumlah Kelas terdaoa ac
 67,20533144,16,1,Jumlah Perpustakaan
 68,20533144,17,1,Jumlah Lab
 69,20533144,18,11400000,Uang Gedung
@@ -116,7 +116,7 @@
 114,20541297,6,3,Akreditasi
 115,20541297,7,2013,Tahun Kurikulum
 116,20541297,8,37,Jumlah Staff
-117,20541297,9,0,Jumlah Guru Bersertifikasi
+117,20541297,9,1,Jumlah Guru Bersertifikasi
 118,20541297,10,447,Jumlah Lulusan
 119,20541297,11,1,Internet
 120,20541297,12,2000,Luas Sekolah (M2)
@@ -137,7 +137,7 @@
 135,20539077,8,51,Jumlah Staff
 136,20539077,9,10,Jumlah Guru Bersertifikasi
 137,20539077,10,660,Jumlah Lulusan
-138,20539077,11,0,Internet
+138,20539077,11,1,Internet
 139,20539077,12,700,Luas Sekolah (M2)
 140,20539077,13,300,Luas Tanah Terbuka (m2)
 141,20539077,14,24,Jumlah Kelas
@@ -145,28 +145,28 @@
 143,20539077,16,1,Jumlah Perpustakaan
 144,20539077,17,1,Jumlah Lab
 145,20539077,18,2622500,Uang Gedung
-146,20539077,19,0,Uang Daftar Ulang
+146,20539077,19,1,Uang Daftar Ulang
 147,20539077,20,1250000,Uang Spp
-148,20539077,21,0,Uang Seragam
+148,20539077,21,1,Uang Seragam
 149,20539077,23,-7.2769977,Koordinat x
 150,20539077,24,112.8015923,Koordinat y
 151,20539077,22,1000,Uang Lain
 152,20563931,6,5,Akreditasi
 153,20563931,7,2013,Tahun Kurikulum
 154,20563931,8,11,Jumlah Staff
-155,20563931,9,0,Jumlah Guru Bersertifikasi
+155,20563931,9,1,Jumlah Guru Bersertifikasi
 156,20563931,10,78,Jumlah Lulusan
 157,20563931,11,0,Internet
 158,20563931,12,500,Luas Sekolah (M2)
 159,20563931,13,1200,Luas Tanah Terbuka (m2)
 160,20563931,14,6,Jumlah Kelas
-161,20563931,15,0,Jumlah Kelas terdaoa ac
+161,20563931,15,1,Jumlah Kelas terdaoa ac
 162,20563931,16,1,Jumlah Perpustakaan
 163,20563931,17,1,Jumlah Lab
 164,20563931,18,1940000,Uang Gedung
-165,20563931,19,0,Uang Daftar Ulang
+165,20563931,19,1,Uang Daftar Ulang
 166,20563931,20,1400000,Uang Spp
-167,20563931,21,0,Uang Seragam
+167,20563931,21,1,Uang Seragam
 168,20563931,23,-7.2866097,Koordinat x
 169,20563931,24,112.7452576,Koordinat y
 170,20563931,22,1000,Uang Lain
